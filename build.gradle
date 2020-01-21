@@ -1,0 +1,55 @@
+buildscript {
+
+	ext {
+		rxJavaVersion = '2.2.10'
+		h2Version = '1.4.200'
+		lombokVersion = '1.18.4'
+		swaggerVersion = '2.8.0'
+		apacheCommonsVersion = '3.9'
+		junitVersion = '4.12'
+		jwtVersion = '0.9.1'
+	}
+
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.challenge'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+	implementation "com.h2database:h2:${h2Version}"
+	implementation "org.projectlombok:lombok:${lombokVersion}"
+	implementation "org.apache.commons:commons-lang3:${apacheCommonsVersion}"
+
+	implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+	implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+	implementation "io.jsonwebtoken:jjwt:${jwtVersion}"
+
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation("junit:junit:${junitVersion}")
+
+}
+
+
+
+tasks.withType(Test) {
+	scanForTestClasses = false
+	include "**/*Test.class" // whatever Ant pattern matches your test class files
+}
