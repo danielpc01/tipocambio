@@ -1,10 +1,3 @@
-sudo docker build -t tipocambio:latest .
-sudo docker run -d  -p 8080:8080 tipocambio:latest
+1. Ejecutar: ./run.sh
 
-sudo docker inspect 8e22f99037b2 | grep "IPAddress"
-172.17.0.2:9091/tipocambio/api/v1/health-check
-
-http://172.17.0.2:9091/h2-console/login.do?jsessionid=141d3ae61aa692ffe4e05d870de960b9
-
-jdbc:h2:mem:exchageratedb
 
