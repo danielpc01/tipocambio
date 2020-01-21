@@ -1,0 +1,11 @@
+/.idea
+/out
+/*/out
+*.iml
+.gradle/
+build
+/build
+/*/build
+*/build
+.sonargraph
+*.sonargraph/
