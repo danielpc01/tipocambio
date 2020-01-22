@@ -6,18 +6,22 @@ import com.challenge.tipocambio.persistence.model.CurrencyType;
 import com.challenge.tipocambio.persistence.model.ExchangeRate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ExchangeRateDtoBuilder {
 
+
+    private static final int SCALE = 4;
 
     public ExchangeRateDto getBuildExchangeRate(BigDecimal amount,
                                                 ExchangeRate exchangeRate,
                                                 CurrencyType currencyOrigin,
                                                 CurrencyType currencyTarget) {
+        BigDecimal divide = amount.divide(exchangeRate.getAmount(), SCALE, BigDecimal.ROUND_DOWN);
         return ExchangeRateDto
                 .builder()
                 .amount(amount)
-                .amountWithExchangeRate(amount.multiply(exchangeRate.getAmount()))
+                .amountWithExchangeRate(divide)
                 .exchangeRate(exchangeRate.getAmount())
                 .currencyOrigin(getBuildCurrencyTypeDto(currencyOrigin))
                 .currencyTarget(getBuildCurrencyTypeDto(currencyTarget))

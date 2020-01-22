@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 import com.challenge.tipocambio.business.exchange.rate.impl.exception.ExchangeRateNotFoundException;
@@ -28,6 +29,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExchangeRateServiceImplTest {
+    private static final int SCALE = 4;
 
     private static final String AMOUNT = "100";
     private static final Long CURRENCY_TYPE_ORIGIN_ID = 1000L;
@@ -73,9 +75,10 @@ public class ExchangeRateServiceImplTest {
                 exchangeRateDto.getAmount(),
                 is(NumberUtils.getInstance().roundDown(AMOUNT)));
 
+        BigDecimal divide = NumberUtils.getInstance().roundDown(AMOUNT).divide(NumberUtils.getInstance().roundDown(EXCHANGE_RATE), SCALE, BigDecimal.ROUND_DOWN);
         assertThat("Amount with Exchange Rate",
                 exchangeRateDto.getAmountWithExchangeRate(),
-                is(NumberUtils.getInstance().roundDown(AMOUNT).multiply(NumberUtils.getInstance().roundDown(EXCHANGE_RATE))));
+                is(divide));
 
         assertThat("Amount with Exchange Rate",
                 exchangeRateDto.getExchangeRate(),
